@@ -18,7 +18,7 @@ public class RotX  {
         // Altres proves d'exemple
         System.out.println("\nXifrat (2)-XYZ => " + xifraRotX("XYZ", 2));
         System.out.println("Desxifrat (2)-ZAÁ => " + desxifraRotX("ZAÁ", 2));
-        System.out.println("\nXifrat (4)-Hola, Mr. calçot => " + xifraRotX("Hola, Mr. calçot", 4));
+        System.out.println("\nXifrat (4)-Holaa, Mr. calçot => " + xifraRotX("Hola, Mr. calçot", 4));
         System.out.println("Desxifrat (4)-Ïqoc, Óú. écoèqü => " + desxifraRotX("Ïqoc, Óú. écoèqü", 4));
         System.out.println("\nXifrat (6)-Perdó, per tu què és? => " + xifraRotX("Perdó, per tu què és?", 6));
         System.out.println("Desxifrat (6)-Úiüht, úiü wx ùxì ív? => " + desxifraRotX("Úiüht, úiü wx ùxì ív?", 6));
