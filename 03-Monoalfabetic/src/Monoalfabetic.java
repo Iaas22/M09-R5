@@ -3,115 +3,116 @@ import java.util.Collections;
 import java.util.List;
 
 public class Monoalfabetic {
-       public static char[] abecedarioMayuscula = "AÀBCÇDEÉÈFGHIÍÏJKLMNÑOÓÒPQRSTUÚÜVWXYZ".toCharArray();       
-public static char[] abecedarioPermutado = null;
+    public static char[] abecedariMayuscula = "AÀBCÇDEÉÈFGHIÍÏJKLMNÑOÓÒPQRSTUÚÜVWXYZ".toCharArray();
+    public static char[] abecedariPermutat = null;
 
+    //genera permutación y la devuelve
+    public static char[] permutaAlfabet(char[] alfabet) {
+        List<Character> llista = new ArrayList<>();
+        for (char c : alfabet) {
+            llista.add(c);
+        }
 
-public static char[] permutaAlfabet(char[] alfabet) {
-    List<Character> listaCharacters = new ArrayList<Character>();
-    for (char c : alfabet) {
-        listaCharacters.add(c);
+        System.out.print("Abecedari original: ");
+        for (char c : alfabet) System.out.print(c);
+        System.out.println();
+
+        Collections.shuffle(llista); 
+
+        System.out.print("Abecedari permutat: ");
+        for (char c : llista) System.out.print(c);
+        System.out.println();
+
+        char[] permutat = new char[alfabet.length];
+        for (int i = 0; i < alfabet.length; i++) {
+            permutat[i] = llista.get(i);
+        }
+
+        abecedariPermutat = permutat;
+        return permutat;
     }
-    // Imprimir abecedario original
-    System.out.print("Abecedario original: ");
-    for (char c : alfabet) {
-        System.out.print(c);
-    }
-    System.out.println();
 
-    // Imprimir abecedario cambiado
-    Collections.shuffle(listaCharacters);
-    System.out.print("Abecedario permutado: ");
-    for (char c : listaCharacters) {
-        System.out.print(c);
-    }
-    System.out.println();
+    //cifra 
+    public static String xifraMonoAlfa(String cadena) {
+        if (abecedariPermutat == null) {
+            permutaAlfabet(abecedariMayuscula);
+        }
 
-    char[] permutado = new char[alfabet.length];
-    for (int i = 0; i < alfabet.length; i++) {
-        permutado[i] = listaCharacters.get(i);
-    }
+        String resultat = "";
 
-    // Guardar el abecedario permutado en la variable estática
-    abecedarioPermutado = permutado;
-
-    return permutado;
-}
-
-//obtener el abecedario permutado guardado
-public static char[] getAbecedarioPermutado() {
-    return abecedarioPermutado;
-}
-
-public static String[] xifraMonoAlfa(String[] cadena) {
-    if (abecedarioPermutado == null) {
-        permutaAlfabet(abecedarioMayuscula);
-    }
-    String[] resultat = new String[cadena.length];
-    for (int i = 0; i < cadena.length; i++) {
-        char[] chars = cadena[i].toCharArray();
-        for (int k = 0; k < chars.length; k++) {
+        for (char c : cadena.toCharArray()) {
+            boolean esMinuscula = Character.isLowerCase(c);
+            char lletraMaj = Character.toUpperCase(c);
             int idx = -1;
-            for (int j = 0; j < abecedarioMayuscula.length; j++) {
-                if (abecedarioMayuscula[j] == chars[k]) {
-                    idx = j;
+
+            //busca la letra en abecedario
+            for (int i = 0; i < abecedariMayuscula.length; i++) {
+                if (abecedariMayuscula[i] == lletraMaj) {
+                    idx = i;
                     break;
                 }
             }
+
             if (idx != -1) {
-                chars[k] = abecedarioPermutado[idx];
+                char xifrat = abecedariPermutat[idx];
+                //mantiene caso original
+                if (esMinuscula) {
+                    xifrat = Character.toLowerCase(xifrat);
+                }
+                resultat += xifrat;
+            } else {
+                //si no está en el abecedario 
+                resultat += c;
             }
-            // Si no está en el alfabeto, se deja igual
         }
-        resultat[i] = new String(chars);
+
+        return resultat;
     }
-    return resultat;
-}
 
+    //descifra
+    public static String desxifraMonoAlfa(String cadena) {
+        if (abecedariPermutat == null) {
+            permutaAlfabet(abecedariMayuscula);
+        }
 
+        String resultat = "";
 
+        for (char c : cadena.toCharArray()) {
+            boolean esMinuscula = Character.isLowerCase(c);
+            char lletraMaj = Character.toUpperCase(c);
+            int index = -1;
 
-
-public static String[] desxifraMonoAlfa(String[] cadena) {
-    if (abecedarioPermutado == null) {
-        permutaAlfabet(abecedarioMayuscula);
-    }
-    String[] resultat = new String[cadena.length];
-    for (int i = 0; i < cadena.length; i++) {
-        char[] chars = cadena[i].toCharArray();
-        for (int k = 0; k < chars.length; k++) {
-            int idx = -1;
-            for (int j = 0; j < abecedarioPermutado.length; j++) {
-                if (abecedarioPermutado[j] == chars[k]) {
-                    idx = j;
+            //busca le letra en abecedario permutado
+            for (int i = 0; i < abecedariPermutat.length; i++) {
+                if (abecedariPermutat[i] == lletraMaj) {
+                    index = i;
                     break;
                 }
             }
-            if (idx != -1) {
-                chars[k] = abecedarioMayuscula[idx];
+
+            if (index != -1) {
+                char desxifrat = abecedariMayuscula[index];
+                if (esMinuscula) {
+                    desxifrat = Character.toLowerCase(desxifrat);
+                }
+                resultat += desxifrat;
+            } else {
+                resultat += c;
             }
-            // Si no está en el abecedario permutado, se deja igual
         }
-        resultat[i] = new String(chars);
-    }
-    return resultat;
-}
 
-
-public static void main(String[] args) {
-    permutaAlfabet(abecedarioMayuscula);
-
-    String[] textos = {"Hola", "Món", "Àlbum", "çÇ"};
-    String[] xifrat = xifraMonoAlfa(textos);
-    System.out.println("Text xifrat:");
-    for (String s : xifrat) {
-        System.out.println(s);
+        return resultat;
     }
 
-    String[] desxifrat = desxifraMonoAlfa(xifrat);
-    System.out.println("Text desxifrat:");
-    for (String s : desxifrat) {
-        System.out.println(s);
+    public static void main(String[] args) {
+        permutaAlfabet(abecedariMayuscula);
+
+        String text = "Hola món Àlbum çÇ";
+    
+        String xifrat = xifraMonoAlfa(text);
+        System.out.println("Text xifrat: " + xifrat);
+
+        String desxifrat = desxifraMonoAlfa(xifrat);
+        System.out.println("Text desxifrat: " + desxifrat);
     }
-}
 }
