@@ -1,4 +1,4 @@
-package iticbcn.xifratge;
+package iticbcn;
 
 import java.util.ArrayList;
 import java.util.Collections;

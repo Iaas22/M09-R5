@@ -1,4 +1,4 @@
-package iticbcn.xifratge;
+package iticbcn;
 
 import java.security.MessageDigest;
 import java.security.SecureRandom;
